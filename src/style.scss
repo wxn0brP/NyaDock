@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --txt: #fff;
+    --back: #111;
+}
+
+body {
+    background: var(--back);
+    color: var(--txt);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100vw;
+    height: 100vh;
+}
+
+.split {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    .panel {
+        border: 1px solid silver;
+        position: relative;
+
+        &.base::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            cursor: move;
+        }
+    }
+
+    &.column {
+        flex-direction: column;
+
+        .panel {
+            width: 100%;
+        }
+
+        &.base> :first-child {
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -15px;
+                height: 30px;
+                cursor: row-resize;
+            }
+        }
+    }
+
+    &.row {
+        flex-direction: row;
+
+        .panel {
+            height: 100%;
+        }
+
+        &.base> :first-child {
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: -15px;
+                width: 30px;
+                cursor: col-resize;
+            }
+        }
+    }
+
+    > :nth-child(2) {
+        flex: 1;
+    }
+}

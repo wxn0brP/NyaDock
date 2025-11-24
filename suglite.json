@@ -1,0 +1,17 @@
+{
+	"cmd": "sass src:dist && tsc --noEmit && bun build ./src/index.ts --outdir ./dist --sourcemap",
+	"watch": [
+		"src"
+	],
+	"server": 16565,
+	"server_map": {
+		"dir": {
+			"/": "public",
+			"-/": "dist"
+		}
+	},
+	"restart_cmd": "clear",
+	"events": {
+		"rs": "clear"
+	}
+}
