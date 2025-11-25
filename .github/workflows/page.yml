@@ -25,7 +25,7 @@ jobs:
       - name: Build project
         run: |
           bun install
-          bunx sass src:dist
+          bunx sass src:public
           bun build ./src/index.ts --outdir ./public --sourcemap
 
       - name: Deploy to gh-pages
