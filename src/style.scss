@@ -45,8 +45,8 @@ body {
             width: 100%;
         }
 
-        &.base> :first-child {
-            &::before {
+        > :first-child {
+            &.base::before {
                 content: "";
                 position: absolute;
                 left: 0;
@@ -65,8 +65,8 @@ body {
             height: 100%;
         }
 
-        &.base> :first-child {
-            &::before {
+        > :first-child {
+            &.base::before {
                 content: "";
                 position: absolute;
                 top: 0;
