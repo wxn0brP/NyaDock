@@ -1,18 +1,23 @@
 export function updateSize(split: HTMLDivElement, size: number | string = "50%") {
     const staticPanel = split.children[0] as HTMLDivElement;
-    const data = typeof size === "number" ? `${size}px` : size;
-
-    if (split.classList.contains("column")) {
-        staticPanel.style.height = data;
-        staticPanel.style.width = "";
-    } else {
-        staticPanel.style.width = data;
-        staticPanel.style.height = "";
-    }
+    updateStaticPanelSize(staticPanel, size);
 
     const siblingPanel = split.children[1] as HTMLDivElement;
     siblingPanel.style.width = "";
     siblingPanel.style.height = "";
+}
+
+export function updateStaticPanelSize(panel: HTMLDivElement, size: number | string = "50%") {
+    const split = panel.parentElement as HTMLDivElement;
+    const data = typeof size === "number" ? `${size}px` : size;
+
+    if (split.classList.contains("column")) {
+        panel.style.height = data;
+        panel.style.width = "";
+    } else {
+        panel.style.width = data;
+        panel.style.height = "";
+    }
 }
 
 export function getRelativePosition(e: MouseEvent, element: HTMLElement) {

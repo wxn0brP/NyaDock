@@ -1,5 +1,5 @@
 import { DRAG } from "../const";
-import { detectDockZone, getRelativePosition, swapPanels, updateSize } from "../utils";
+import { detectDockZone, getRelativePosition, swapPanels, updateSize, updateStaticPanelSize } from "../utils";
 
 let draggingPanel: HTMLDivElement = null;
 
@@ -18,6 +18,10 @@ document.addEventListener("mouseup", (e) => {
     if (!draggingPanel) return;
     document.body.style.cursor = "";
 
+    function end() {
+        draggingPanel = null;
+    }
+
     const master = draggingPanel.closest(".master") as HTMLDivElement;
     const allPanels = [...master.querySelectorAll(".panel")].filter(
         p => p !== draggingPanel
@@ -25,34 +29,20 @@ document.addEventListener("mouseup", (e) => {
 
     const elemUnder = document.elementFromPoint(e.clientX, e.clientY);
 
-    if (!elemUnder) {
-        draggingPanel = null;
-        return;
-    }
+    if (!elemUnder) return end();
 
     const targetPanel = (elemUnder as HTMLElement).closest(".panel") as HTMLDivElement | null;
+    if (!targetPanel) return end();
 
-    if (!targetPanel) {
-        draggingPanel = null;
-        return;
-    }
-
-    if (!allPanels.includes(targetPanel)) {
-        draggingPanel = null;
-        return;
-    }
-
-    function end() {
-        draggingPanel = null;
-    }
+    if (!allPanels.includes(targetPanel)) return end();
 
     /**
      * <div id="app" class="master split row">
-     *      <div class="panel base" style="width: 50%;">panel1</div>     targetPanel
+     *      <div class="panel base" style="width: 50%;">panel1</div>            targetPanel
      *      <div class="panel">
      *          <div class="split column">
-     *              <div class="panel base" style="height: 50%;">panel2</div>
-     *              <div class="panel base">panel3</div>     draggingPanel
+     *              <div class="panel base" style="height: 50%;">panel2</div>   siblingPanel
+     *              <div class="panel base">panel3</div>                        draggingPanel
      *          </div>
      *      </div>
      *  </div>
@@ -61,10 +51,7 @@ document.addEventListener("mouseup", (e) => {
     targetPanel.parentElement.dataset.id = "ny-id";
     const zone = detectDockZone(e, targetPanel);
 
-    if (zone === "center") {
-        end();
-        return;
-    }
+    if (zone === "center") return end();
 
     const siblingPanel = [...draggingPanel.parentElement!.children].find(el => el !== draggingPanel) as HTMLDivElement;
     siblingPanel.style.width = "";
@@ -81,11 +68,11 @@ document.addEventListener("mouseup", (e) => {
      * <div id="app" class="master split row">
      *      <div class="panel" style="width: 50%;">
      *          <div class="split row">
-     *              <div class="panel base" style="width: 50%;">panel3</div>  draggingPanel
-     *              <div class="panel base">panel1</div>         targetPanel
+     *              <div class="panel base" style="width: 50%;">panel3</div>    draggingPanel
+     *              <div class="panel base">panel1</div>                        targetPanel
      *          </div>
      *      </div>
-     *      <div class="panel base">panel2</div>
+     *      <div class="panel base">panel2</div>                                siblingPanel
      *  </div>
      */
 
@@ -104,11 +91,9 @@ document.addEventListener("mouseup", (e) => {
         swapPanels(newSplitContainer);
 
     const newSplitPanel = newSplitContainer.parentElement as HTMLDivElement;
-
     if (!newSplitPanel) return end();
 
-    newSplitPanel.style.width = "50%";
-    newSplitPanel.style.height = "";
+    updateStaticPanelSize(newSplitPanel);
 
     end();
 });
