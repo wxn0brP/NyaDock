@@ -48,17 +48,50 @@ document.addEventListener("mouseup", (e) => {
      *  </div>
      */
 
-    targetPanel.parentElement.dataset.id = "ny-id";
     const zone = detectDockZone(e, targetPanel);
-
     if (zone === "center") return end();
+
+    if (draggingPanel.parentElement.classList.contains("master")) {
+        const typeRow = draggingPanel.parentElement.classList.contains("row");
+        draggingPanel.parentElement.classList.toggle("row", !typeRow);
+        draggingPanel.parentElement.classList.toggle("column", typeRow);
+
+        const siblingPanel = [...targetPanel.parentElement!.children].find(el => el !== targetPanel) as HTMLDivElement;
+        siblingPanel.style.width = "";
+        siblingPanel.style.height = "";
+
+        const draggingChildrenIndex = [...draggingPanel.parentElement.children].indexOf(draggingPanel);
+
+        draggingPanel.parentElement.appendChild(siblingPanel);
+        targetPanel.parentElement.appendChild(draggingPanel);
+
+        if (draggingChildrenIndex === 0)
+            swapPanels(siblingPanel.parentElement);
+
+        updateSize(siblingPanel.parentElement);
+
+        const newSplitContainer = draggingPanel.parentElement;
+
+        const columnType = zone === "left" || zone === "right";
+        newSplitContainer.classList.toggle("column", !columnType);
+        newSplitContainer.classList.toggle("row", columnType);
+
+        if (zone === "left" || zone === "top")
+            swapPanels(newSplitContainer);
+
+        updateSize(draggingPanel.parentElement);
+
+        return end();
+    }
 
     const siblingPanel = [...draggingPanel.parentElement!.children].find(el => el !== draggingPanel) as HTMLDivElement;
     siblingPanel.style.width = "";
     siblingPanel.style.height = "";
+
+    targetPanel.parentElement.dataset.id = "ny-id-target";
     targetPanel.parentElement.replaceChild(draggingPanel.parentElement.parentElement, targetPanel);
 
-    const nyID = qs("ny-id", 1);
+    const nyID = qs("ny-id-target", 1);
     nyID.appendChild(siblingPanel);
     nyID.dataset.id = "";
 
@@ -79,18 +112,18 @@ document.addEventListener("mouseup", (e) => {
     targetPanel.style.width = "";
     targetPanel.style.height = "";
 
-    const newSplitContainer = draggingPanel.parentElement as HTMLDivElement;
+    const newSplitContainer = draggingPanel.parentElement;
     if (!newSplitContainer) return end();
 
     const columnType = zone === "left" || zone === "right";
     newSplitContainer.classList.toggle("column", !columnType);
     newSplitContainer.classList.toggle("row", columnType);
-    updateSize(draggingPanel.parentElement as HTMLDivElement);
+    updateSize(draggingPanel.parentElement);
 
     if (zone === "right" || zone === "bottom")
         swapPanels(newSplitContainer);
 
-    const newSplitPanel = newSplitContainer.parentElement as HTMLDivElement;
+    const newSplitPanel = newSplitContainer.parentElement;
     if (!newSplitPanel) return end();
 
     updateStaticPanelSize(newSplitPanel);
