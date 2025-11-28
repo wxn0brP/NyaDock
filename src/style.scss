@@ -51,7 +51,7 @@ body {
 
         > :first-child {
             border-bottom: 1px solid silver;
-            height: var(--size);
+            height: var(--size) !important;
 
             &.base::before {
                 content: "";
@@ -74,7 +74,7 @@ body {
 
         > :first-child {
             border-right: 1px solid silver;
-            width: var(--size);
+            width: var(--size) !important;
 
             &.base::before {
                 content: "";

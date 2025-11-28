@@ -2,6 +2,7 @@ import { clamp } from "@wxn0brp/flanker-ui/utils";
 import { DRAG, RESIZE_MIN } from "../const";
 import logger from "../logger";
 import { getRelativePosition } from "../utils";
+import { controller } from "../state";
 
 let draggingPanel: HTMLDivElement = null;
 let leftPanel: HTMLDivElement = null;
@@ -41,6 +42,9 @@ document.addEventListener("mousemove", (e) => {
     else
         value = clamp(RESIZE_MIN, data.y, draggingPanel.parentElement.offsetHeight - RESIZE_MIN);
 
+    const id = draggingPanel.parentElement.dataset.nya_split;
+    const split = controller._splits.get(id);
+    split.style.setProperty("--size", `${value}px`);
     logger.debug(`Resizing to ${value}`);
 });
 

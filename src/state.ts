@@ -6,12 +6,12 @@ export type SplitType = "row" | "column";
 export interface Split {
     nodes: [Node | Split, Node | Split];
     type: SplitType;
-    size?: string;
 }
 
 export class NyaController {
     _split: Split;
     _panels = new Map<string, HTMLDivElement>();
+    _splits = new Map<string, HTMLDivElement>();
     master: HTMLDivElement;
 
     loadState(state: Split) {
@@ -33,6 +33,7 @@ export class NyaController {
     }
 
     render() {
+        this._splits.clear();
         render(this);
     }
 

@@ -13,12 +13,15 @@ export function render(controller: NyaController) {
     controller.master.appendChild(masterSplit);
 }
 
-function renderSplit(controller: NyaController, split: Split) {
+function renderSplit(controller: NyaController, split: Split, prefix = "0") {
     const div = document.createElement("div");
     div.classList.add("split");
     div.classList.add(split.type);
+    div.dataset.nya_split = prefix;
+    controller._splits.set(prefix, div);
 
-    for (const node of split.nodes) {
+    for (let i = 0; i < split.nodes.length; i++) {
+        const node = split.nodes[i];
         if (typeof node === "string") {
             const panel = controller._panels.get(node);
             div.appendChild(panel);
@@ -26,7 +29,7 @@ function renderSplit(controller: NyaController, split: Split) {
             const splitPanel = document.createElement("div");
             splitPanel.classList.add("panel");
 
-            const splitContent = renderSplit(controller, node);
+            const splitContent = renderSplit(controller, node, `${prefix}.${i}`);
             splitPanel.appendChild(splitContent);
 
             div.appendChild(splitPanel);
