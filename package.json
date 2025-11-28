@@ -16,9 +16,9 @@
 		"build": "tsc && tsc-alias && sass src:dist"
 	},
 	"devDependencies": {
+		"sass": "*",
 		"tsc-alias": "*",
-		"typescript": "*",
-		"sass": "*"
+		"typescript": "*"
 	},
 	"files": [
 		"dist"

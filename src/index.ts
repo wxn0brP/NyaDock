@@ -1,15 +1,14 @@
 import "@wxn0brp/flanker-ui/html";
-import { createPanel, panel2Split } from "./createPanel";
-import "./mouse";
-import { updateSize } from "./utils";
 import logger from "./logger";
+import "./mouse";
+import { controller } from "./state";
 
 logger.setLogLevel("DEBUG");
 (window as any).logger = logger;
 
 const app = qs("#app");
 
-const panel1 = createPanel();
+const panel1 = document.createElement("div");
 panel1.innerHTML = `
     <div class="panel-header">Panel 1</div>
     <div class="panel-content">
@@ -23,7 +22,7 @@ panel1.innerHTML = `
     </div>
 `;
 
-const panel2 = createPanel();
+const panel2 = document.createElement("div");
 panel2.innerHTML = `
     <div class="panel-header">Panel 2</div>
     <div class="panel-content">
@@ -36,7 +35,7 @@ panel2.innerHTML = `
     </div>
 `;
 
-const panel3 = createPanel();
+const panel3 = document.createElement("div");
 panel3.innerHTML = `
     <div class="panel-header">Panel 3</div>
     <div class="panel-content">
@@ -48,7 +47,7 @@ panel3.innerHTML = `
     </div>
 `;
 
-const panel4 = createPanel();
+const panel4 = document.createElement("div");
 panel4.innerHTML = `
     <div class="panel-header">Panel 4</div>
     <div class="panel-content">
@@ -63,7 +62,7 @@ panel4.innerHTML = `
     </div>
 `;
 
-const panel5 = createPanel();
+const panel5 = document.createElement("div");
 panel5.innerHTML = `
     <div class="panel-header">Panel 5</div>
     <div class="panel-content">
@@ -88,9 +87,37 @@ panel5.innerHTML = `
     </div>
 `;
 
-app.appendChild(panel1);
-app.appendChild(panel2);
-updateSize(app);
-updateSize(panel2Split(panel2, panel3, "column"));
-updateSize(panel2Split(panel3, panel4, "row"));
-updateSize(panel2Split(panel4, panel5, "column"));
+controller.master = app;
+const state = controller.getDefaultState();
+
+state.type = "row";
+state.nodes = [
+    "panel1",
+    {
+        type: "column",
+        nodes: [
+            "panel2",
+            {
+                type: "row",
+                nodes: [
+                    {
+                        type: "column",
+                        nodes: ["panel3", "panel5"],
+                    },
+                    "panel4",
+                ],
+            }
+        ],
+    },
+]
+
+controller.loadState(state);
+
+controller.registerPanel("panel1", panel1);
+controller.registerPanel("panel2", panel2);
+controller.registerPanel("panel3", panel3);
+controller.registerPanel("panel4", panel4);
+controller.registerPanel("panel5", panel5);
+
+controller.render();
+controller.setDefaultSize();

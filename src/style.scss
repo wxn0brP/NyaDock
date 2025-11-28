@@ -1,4 +1,3 @@
-// Original styles
 * {
     margin: 0;
     padding: 0;
@@ -16,6 +15,11 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 100vw;
     height: 100vh;
+}
+
+.master {
+    height: 100%;
+    width: 100%;
 }
 
 .split {
@@ -47,6 +51,7 @@ body {
 
         > :first-child {
             border-bottom: 1px solid silver;
+            height: var(--size);
 
             &.base::before {
                 content: "";
@@ -69,6 +74,7 @@ body {
 
         > :first-child {
             border-right: 1px solid silver;
+            width: var(--size);
 
             &.base::before {
                 content: "";
