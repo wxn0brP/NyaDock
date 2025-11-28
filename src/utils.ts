@@ -7,7 +7,9 @@ export function getRelativePosition(e: MouseEvent, element: HTMLElement) {
     };
 }
 
-export function detectDockZone(e: MouseEvent, panel: HTMLElement, threshold = 0.35) {
+export type Direction = "left" | "right" | "top" | "bottom";
+
+export function detectDockZone(e: MouseEvent, panel: HTMLElement, threshold = 0.35): Direction | "center" {
     const rect = panel.getBoundingClientRect();
 
     const relX = (e.clientX - rect.left) / rect.width;

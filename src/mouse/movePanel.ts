@@ -1,4 +1,5 @@
 import { DRAG } from "../const";
+import { controller } from "../state";
 import logger from "../logger";
 import { detectDockZone, getRelativePosition } from "../utils";
 
@@ -29,6 +30,7 @@ document.addEventListener("mouseup", (e) => {
         logger.debug("Mouseup event ignored: no panel is being dragged");
         return;
     }
+
     document.body.style.cursor = "";
 
     function end() {
@@ -67,6 +69,23 @@ document.addEventListener("mouseup", (e) => {
         logger.debug("Docking to center, no action taken");
         return end();
     }
+
+    const sourceId = draggingPanel.dataset.nya_id;
+    const targetId = targetPanel.dataset.nya_id;
+
+    if (!sourceId || !targetId) {
+        logger.error("Panel ID not found");
+        return end();
+    }
+
+    if (sourceId === targetId) {
+        logger.debug("Mouseup event ignored: source and target are the same");
+        return end();
+    }
+
+    controller.movePanel(sourceId, targetId, zone);
+    controller.render();
+    controller.setDefaultSize();
 
     end();
 });
