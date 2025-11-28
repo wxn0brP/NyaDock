@@ -31,7 +31,7 @@ body {
     .panel {
         position: relative;
 
-        &.base::after {
+        &::after {
             content: "";
             position: absolute;
             top: 0;
@@ -53,13 +53,14 @@ body {
             border-bottom: 1px solid silver;
             height: var(--size) !important;
 
-            &.base::before {
+            &::before {
                 content: "";
                 position: absolute;
                 left: 0;
                 right: 0;
                 bottom: -15px;
                 height: 30px;
+                z-index: 99;
                 cursor: row-resize;
             }
         }
@@ -76,13 +77,14 @@ body {
             border-right: 1px solid silver;
             width: var(--size) !important;
 
-            &.base::before {
+            &::before {
                 content: "";
                 position: absolute;
                 top: 0;
                 bottom: 0;
                 right: -15px;
                 width: 30px;
+                z-index: 99;
                 cursor: col-resize;
             }
         }

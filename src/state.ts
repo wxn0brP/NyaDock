@@ -29,7 +29,6 @@ export class NyaController {
     registerPanel(id: string, panel: HTMLDivElement) {
         panel.dataset.nya_id = id;
         panel.classList.add("panel");
-        panel.classList.add("base");
         this._panels.set(id, panel);
     }
 
