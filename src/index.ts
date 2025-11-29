@@ -98,6 +98,7 @@ const structure = [
             ["panel3", "panel5", 1],
             "panel4",
         ],
+        1
     ]
 ];
 
