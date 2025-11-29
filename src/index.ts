@@ -2,6 +2,7 @@ import "@wxn0brp/flanker-ui/html";
 import logger from "./logger";
 import "./mouse";
 import { controller } from "./state";
+import { convertToSplits } from "./utils/convertSplit";
 
 logger.setLogLevel("DEBUG");
 (window as any).logger = logger;
@@ -88,30 +89,20 @@ panel5.innerHTML = `
 `;
 
 controller.master = app;
-const state = controller.getDefaultState();
 
-state.type = "row";
-state.nodes = [
+const structure = [
     "panel1",
-    {
-        type: "column",
-        nodes: [
-            "panel2",
-            {
-                type: "row",
-                nodes: [
-                    {
-                        type: "column",
-                        nodes: ["panel3", "panel5"],
-                    },
-                    "panel4",
-                ],
-            }
+    [
+        "panel2",
+        [
+            ["panel3", "panel5", 1],
+            "panel4",
         ],
-    },
-]
+    ]
+];
 
-controller.loadState(state);
+const convertedState = convertToSplits(structure);
+controller.loadState(convertedState);
 
 controller.registerPanel("panel1", panel1);
 controller.registerPanel("panel2", panel2);

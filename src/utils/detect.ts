@@ -1,3 +1,5 @@
+import { Direction } from "../types";
+
 export function getRelativePosition(e: MouseEvent, element: HTMLElement) {
     const rect = element.getBoundingClientRect();
 
@@ -6,8 +8,6 @@ export function getRelativePosition(e: MouseEvent, element: HTMLElement) {
         y: e.clientY - rect.top
     };
 }
-
-export type Direction = "left" | "right" | "top" | "bottom";
 
 export function detectDockZone(e: MouseEvent, panel: HTMLElement, threshold = 0.35): Direction | "center" {
     const rect = panel.getBoundingClientRect();

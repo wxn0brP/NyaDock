@@ -1,7 +1,7 @@
 import { DRAG } from "../const";
 import { controller } from "../state";
 import logger from "../logger";
-import { detectDockZone, getRelativePosition } from "../utils";
+import { detectDockZone, getRelativePosition } from "../utils/detect";
 
 let draggingPanel: HTMLDivElement = null;
 

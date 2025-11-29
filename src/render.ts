@@ -1,4 +1,5 @@
-import { NyaController, Split } from "./state";
+import { NyaController } from "./state";
+import { NyaSplit } from "./types";
 
 export function render(controller: NyaController) {
     const tempElement = document.createElement("div");
@@ -13,7 +14,7 @@ export function render(controller: NyaController) {
     controller.master.appendChild(masterSplit);
 }
 
-function renderSplit(controller: NyaController, split: Split, prefix = "0") {
+function renderSplit(controller: NyaController, split: NyaSplit, prefix = "0") {
     const div = document.createElement("div");
     div.classList.add("split");
     div.classList.add(split.type);

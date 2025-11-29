@@ -2,7 +2,7 @@ import { clamp } from "@wxn0brp/flanker-ui/utils";
 import { DRAG, RESIZE_MIN } from "../const";
 import logger from "../logger";
 import { controller } from "../state";
-import { getRelativePosition } from "../utils";
+import { getRelativePosition } from "../utils/detect";
 
 let draggingPanel: HTMLDivElement = null;
 let leftPanel: HTMLDivElement = null;
