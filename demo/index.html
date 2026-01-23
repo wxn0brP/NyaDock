@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>NyaDock Demo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div id="app" class="master"></div>
+
+    <div class="panel" id="panel1">
+        <div class="panel-header">Panel 1</div>
+        <div class="panel-content">
+            <h3>Welcome to Panel 1</h3>
+            <p>This is the first panel in the layout.</p>
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+            </ul>
+            <div class="button-group">
+                <button onclick="controller.reset()">Reset Config</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel" id="panel2">
+        <div class="panel-header">Panel 2</div>
+        <div class="panel-content">
+            <h3>Content for Panel 2</h3>
+            <p>This is the second panel, split from the main container.</p>
+            <div class="button-group">
+                <button>Button 1</button>
+                <button>Button 2</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel" id="panel3">
+        <div class="panel-header">Panel 3</div>
+        <div class="panel-content">
+            <h3>Additional Panel</h3>
+            <p>This is the third panel in the layout.</p>
+            <div class="info-box">
+                <p>This panel was created by splitting with Panel 2.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel" id="panel4">
+        <div class="panel-header">Panel 4</div>
+        <div class="panel-content">
+            <h3>Form Panel</h3>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name"><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email"><br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+
+    <div class="panel" id="panel5">
+        <div class="panel-header">Panel 5</div>
+        <div class="panel-content">
+            <h3>Table Panel</h3>
+            <table border="1">
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Age</th>
+                </tr>
+                <tr>
+                    <td>Jill</td>
+                    <td>Smith</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <td>Eve</td>
+                    <td>Jackson</td>
+                    <td>94</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
