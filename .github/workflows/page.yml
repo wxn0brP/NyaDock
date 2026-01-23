@@ -26,7 +26,8 @@ jobs:
         run: |
           bun install
           bunx sass src:public
-          bun build ./src/index.ts --outdir ./public --sourcemap
+          bun build ./public/index.ts --outdir ./public --sourcemap
+          rm ./public/index.ts
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4

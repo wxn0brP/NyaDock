@@ -75,7 +75,7 @@ function locatePanel(e: MouseEvent, log = false) {
     const targetId = targetPanel.dataset.nya_id;
 
     if (!sourceId)
-        sourceId = draggingPanel.qs(".panel[data-nya_id]")?.dataset.nya_id;
+        sourceId = draggingPanel.querySelector<HTMLDivElement>(".panel[data-nya_id]")?.dataset.nya_id;
 
     if (!sourceId || !targetId) {
         if (log) logger.error("Panel ID not found");

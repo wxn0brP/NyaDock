@@ -34,14 +34,20 @@ First, you need a container element in your HTML to host the dock layout, and in
 <!-- The main container for the dock layout -->
 <div id="app"></div>
 
-<!-- Your panel content (can be hidden initially) -->
-<div id="panel1-content" style="display: none;">
-    <h2>Panel 1</h2>
-    <p>Content for the first panel.</p>
+<!-- Your panel content -->
+<div class="panel" id="panel1">
+    <div class="panel-header">Panel 1</div>
+    <div class="panel-content">
+        <h2>Panel 1</h2>
+        <p>Content for the first panel.</p>
+    </div>
 </div>
-<div id="panel2-content" style="display: none;">
-    <h2>Panel 2</h2>
-    <p>Content for the second panel.</p>
+<div class="panel" id="panel2">
+    <div class="panel-header">Panel 2</div>
+    <div class="panel-content">
+        <h2>Panel 2</h2>
+        <p>Content for the second panel.</p>
+    </div>
 </div>
 ```
 
@@ -51,21 +57,21 @@ Import the `controller` and use it to configure and initialize the layout. Note 
 
 ```typescript
 import { controller } from "@wxn0brp/nya-dock/state";
-import "@wxn0brp/nya-dock/style.css";
+import "@wxn0brp/nya-dock/style.css"; // or in html: <link rel="stylesheet" href="node_modules/@wxn0brp/nya-dock/dist/style.css">
 
 // 1. Get the master container element
 const appContainer = document.querySelector("#app");
 
-// 2. Get your panel content elements
-const panel1 = document.querySelector("#panel1-content");
-const panel2 = document.querySelector("#panel2-content");
+// 2. Get your panel elements
+const panels = document.querySelectorAll(".panel");
 
 // 3. Assign the master container
 controller.master = appContainer;
 
-// 4. Register your panels with unique IDs
-controller.registerPanel("panel1", panel1);
-controller.registerPanel("panel2", panel2);
+// 4. Register your panels
+for (const panel of panels) {
+    controller.registerPanel(panel.id, panel);
+}
 
 // 5. Define the layout structure
 // A horizontal split between "panel1" and "panel2"
@@ -92,6 +98,31 @@ You can nest these structures to create complex layouts:
 // panelA is on the left.
 // The right side is a vertical split between panelB and panelC.
 const complexLayout = ["panelA", ["panelB", "panelC", 1]];
+```
+
+### CSS Customization
+
+```css
+:root {
+  --nya-dock-border: silver;
+
+  --nya-dock-header: #2c2c2c;
+  --nya-dock-header-border: #444;
+  --nya-dock-header-color: #ddd;
+
+  --nya-dock-content-color: #aaa;
+  --nya-dock-content-border: #444;
+
+  --nya-dock-button-background: #444;
+  --nya-dock-button-color: white;
+  --nya-dock-button-hover-background: #555;
+
+  --nya-dock-info-box-background: #222;
+  --nya-dock-info-box-border: #666;
+
+  --nya-dock-dock-background: blueviolet;
+  --nya-dock-dock-opacity: 0.2;
+}
 ```
 
 ## License
