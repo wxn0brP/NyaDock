@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/wxn0brP/NyaDock/compare/v0.0.3...v0.0.4) (2026-03-30)
+
+
+### Bug Fixes
+
+* import style.css ([3b9a3e9](https://github.com/wxn0brP/NyaDock/commit/3b9a3e918e28e1febe8b632299cf9a3fee20535d))
+
 ### [0.0.3](https://github.com/wxn0brP/NyaDock/compare/v0.0.2...v0.0.3) (2026-01-23)
 
 
