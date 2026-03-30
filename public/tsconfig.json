@@ -8,6 +8,7 @@
 		"skipLibCheck": true,
 		"outDir": "./dist",
 		"declaration": true,
+		"strict": false,
 		"types": [
 			"@wxn0brp/flanker-ui"
 		]

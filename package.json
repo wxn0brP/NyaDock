@@ -16,9 +16,12 @@
         "build": "tsc && tsc-alias && sass src:dist"
     },
     "devDependencies": {
-        "sass": "*",
-        "tsc-alias": "*",
-        "typescript": "*"
+        "sass": "^1",
+        "tsc-alias": "^1",
+        "typescript": "^6"
+    },
+    "dependencies": {
+        "@wxn0brp/flanker-ui": "^0.5.1"
     },
     "files": [
         "dist"
@@ -35,8 +38,5 @@
             "import": "./dist/*.js",
             "default": "./dist/*.js"
         }
-    },
-    "dependencies": {
-        "@wxn0brp/flanker-ui": "~0.5.1"
     }
 }
