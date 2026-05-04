@@ -56,7 +56,7 @@ First, you need a container element in your HTML to host the dock layout, and in
 Import the `controller` and use it to configure and initialize the layout. Note that you also need to import the stylesheet.
 
 ```typescript
-import { controller } from "@wxn0brp/nya-dock/state";
+import { controller } from "@wxn0brp/nya-dock";
 import "@wxn0brp/nya-dock/style.css"; // or in html: <link rel="stylesheet" href="node_modules/@wxn0brp/nya-dock/dist/style.css">
 
 // 1. Get the master container element
