@@ -1,4 +1,11 @@
-import { NyaSplit } from "../types";
+import { NyaNode, NyaSplit, NyaStack } from "../types";
+import { isStructStack, toStack } from "./tabs";
+
+function convertNode(node: unknown): NyaNode | NyaSplit | NyaStack {
+	if (Array.isArray(node)) return convertToSplits(node);
+	if (isStructStack(node)) return toStack(node);
+	return node as NyaNode;
+}
 
 export function convertToSplits(arr: any[]): NyaSplit {
 	if (arr.length === 0) {
@@ -14,38 +21,20 @@ export function convertToSplits(arr: any[]): NyaSplit {
 	}
 
 	if (actualArray.length === 1) {
-		const element = actualArray[0];
-		if (Array.isArray(element)) {
-			const nestedSplit = convertToSplits(element);
-			return {
-				type: isColumnLayout ? "column" : "row",
-				nodes: [
-					nestedSplit,
-					"empty",
-				],
-			};
-		} else {
-			return {
-				type: isColumnLayout ? "column" : "row",
-				nodes: [
-					element as string,
-					"empty",
-				],
-			};
-		}
-	} else if (actualArray.length === 2) {
-		const [first, second] = actualArray;
-
-		const firstElement = Array.isArray(first) ? convertToSplits(first) : first;
-		const secondElement = Array.isArray(second)
-			? convertToSplits(second)
-			: second;
-
 		return {
 			type: isColumnLayout ? "column" : "row",
 			nodes: [
-				firstElement,
-				secondElement,
+				convertNode(actualArray[0]),
+				"empty",
+			],
+		};
+	} else if (actualArray.length === 2) {
+		const [first, second] = actualArray;
+		return {
+			type: isColumnLayout ? "column" : "row",
+			nodes: [
+				convertNode(first),
+				convertNode(second),
 			],
 		};
 	} else {
@@ -69,16 +58,11 @@ export function convertToSplits(arr: any[]): NyaSplit {
 			}
 		}
 
-		const firstElement = Array.isArray(first) ? convertToSplits(first) : first;
-		const restElement = Array.isArray(restStructure)
-			? convertToSplits(restStructure)
-			: restStructure;
-
 		return {
 			type: isColumnLayout ? "column" : "row",
 			nodes: [
-				firstElement,
-				restElement,
+				convertNode(first),
+				convertNode(restStructure),
 			],
 		};
 	}

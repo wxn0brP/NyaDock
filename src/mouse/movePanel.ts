@@ -5,7 +5,7 @@ import { saveNyaState } from "../storage";
 import { Direction } from "../types";
 import { detectDockZone, getRelativePosition } from "../utils/detect";
 
-function removePreviewClass(zone: Direction) {
+function removePreviewClass(zone: Direction | "center") {
 	document
 		.querySelectorAll(`.dock-${zone}`)
 		.forEach(dock => dock.classList.remove("dock-" + zone));
@@ -16,12 +16,25 @@ function removePreviewClasses() {
 	removePreviewClass("right");
 	removePreviewClass("top");
 	removePreviewClass("bottom");
+	removePreviewClass("center");
 }
 
 let draggingPanel: HTMLDivElement = null;
 
 document.addEventListener("mousedown", e => {
-	const target = e.target as HTMLDivElement;
+	const target = e.target as HTMLElement;
+
+	const tab = target.closest<HTMLElement>(".nya-tab");
+	if (tab) {
+		const panel = controller._panels.get(tab.dataset.nya_tab);
+		if (!panel) return;
+
+		draggingPanel = panel;
+		logger.info("Dragging tab started", panel);
+		document.body.style.cursor = "move";
+		return;
+	}
+
 	if (!target.classList.contains("panel")) {
 		logger.debug("Mousedown event ignored: target is not a panel");
 		return;
@@ -33,7 +46,7 @@ document.addEventListener("mousedown", e => {
 		return;
 	}
 
-	draggingPanel = target;
+	draggingPanel = target as HTMLDivElement;
 	logger.info("Dragging panel started", draggingPanel);
 	document.body.style.cursor = "move";
 });
@@ -56,9 +69,20 @@ function locatePanel(e: MouseEvent, log = false) {
 		return null;
 	}
 
-	const targetPanel = (elemUnder as HTMLElement).closest(
-		".panel",
-	) as HTMLDivElement | null;
+	const tab = (elemUnder as HTMLElement).closest<HTMLElement>(".nya-tab");
+
+	let targetPanel: HTMLDivElement | null;
+	let zone: Direction | "center" = "center";
+
+	if (tab) {
+		targetPanel = controller._panels.get(tab.dataset.nya_tab) ?? null;
+	} else {
+		targetPanel = (elemUnder as HTMLElement).closest(
+			".panel",
+		) as HTMLDivElement | null;
+		if (targetPanel) zone = detectDockZone(e, targetPanel);
+	}
+
 	if (!targetPanel) {
 		if (log) logger.debug("Mouse event ignored: no target panel under cursor");
 		return null;
@@ -73,12 +97,7 @@ function locatePanel(e: MouseEvent, log = false) {
 		return null;
 	}
 
-	const zone = detectDockZone(e, targetPanel);
 	if (log) logger.info(`Docking to ${zone}`);
-	if (zone === "center") {
-		if (log) logger.debug("Docking to center, no action taken");
-		return null;
-	}
 
 	let sourceId = draggingPanel.dataset.nya_id;
 	const targetId = targetPanel.dataset.nya_id;
@@ -125,8 +144,6 @@ document.addEventListener("mouseup", e => {
 	const { sourceId, targetId, zone } = result;
 
 	controller.movePanel(sourceId, targetId, zone);
-	controller._render();
-	controller._setDefaultSize();
 	saveNyaState();
 	removePreviewClasses();
 

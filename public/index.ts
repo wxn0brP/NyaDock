@@ -1,5 +1,5 @@
 import "@wxn0brp/flanker-ui/html";
-import { controller, logger } from "../src";
+import { column, controller, logger, row, tabs } from "../src";
 
 logger.setLogLevel("DEBUG");
 (window as any).logger = logger;
@@ -8,17 +8,15 @@ logger.setLogLevel("DEBUG");
 const app = qs("#app");
 
 controller.master = app;
-controller.setDefaultState([
-    "panel1",
-    [
-        "panel2",
-        [
-            ["panel3", "panel5", 1],
-            "panel4",
-        ],
-        1
-    ]
-]);
+controller.setDefaultState(
+    row(
+        "panel1",
+        column(
+            "panel2",
+            column(tabs([ "panel3", "panel5" ]), "panel4"),
+        ),
+    ),
+);
 
 const panels = document.querySelectorAll<HTMLDivElement>(".panel");
 for (const panel of panels) {

@@ -9,9 +9,5 @@
 			"/": "public",
 			"-/": "dist"
 		}
-	},
-	restart_cmd: "clear",
-	events: {
-		rs: "clear"
 	}
 }
