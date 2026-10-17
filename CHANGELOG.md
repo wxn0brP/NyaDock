@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/wxn0brP/NyaDock/compare/v0.0.4...v0.0.5) (2026-10-17)
+
+
+### Features
+
+* improve ([efd7765](https://github.com/wxn0brP/NyaDock/commit/efd7765b8143f35932990543301749a90891ec10))
+
 ### [0.0.4](https://github.com/wxn0brP/NyaDock/compare/v0.0.3...v0.0.4) (2026-03-30)
 
 
