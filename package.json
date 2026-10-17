@@ -1,0 +1,40 @@
+{
+  "name": "@wxn0brp/nya-dock",
+  "version": "0.0.5",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wxn0brP/NyaDock.git"
+  },
+  "homepage": "https://github.com/wxn0brP/NyaDock",
+  "author": "wxn0brP",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@wxn0brp/biome": "*",
+    "sass": "^1",
+    "tsc-alias": "^1",
+    "typescript": "^7"
+  },
+  "dependencies": {
+    "@wxn0brp/flanker-ui": "^0.5.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
+    }
+  }
+}
