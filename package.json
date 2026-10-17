@@ -16,12 +16,13 @@
         "build": "tsc && tsc-alias && sass src:dist"
     },
     "devDependencies": {
+        "@wxn0brp/biome": "*",
         "sass": "^1",
         "tsc-alias": "^1",
-        "typescript": "^6"
+        "typescript": "^7"
     },
     "dependencies": {
-        "@wxn0brp/flanker-ui": "^0.5.1"
+        "@wxn0brp/flanker-ui": "^0.5.3"
     },
     "files": [
         "dist"

@@ -6,14 +6,12 @@
 		"paths": {},
 		"esModuleInterop": true,
 		"skipLibCheck": true,
+		"rootDir": "..",
 		"outDir": "./dist",
 		"declaration": true,
 		"strict": false,
 		"types": [
 			"@wxn0brp/flanker-ui"
 		]
-	},
-	"include": [
-		"."
-	]
+	}
 }
